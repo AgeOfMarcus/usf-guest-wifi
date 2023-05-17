@@ -1,5 +1,6 @@
 import requests
 import argparse
+import sys
 
 p = argparse.ArgumentParser()
 p.add_argument('-m', '--mode', help='First use [r]egister, then [v]alidate. Or just use [i]nteractive. Usage: -m/--mode r/v/i', required=True)
@@ -48,12 +49,12 @@ if args.mode.lower() in ('r', 'i'):
 
     print('Response:', register_resp.json())
     print('Session ID (for -s/--session):', register_resp.cookies['PHPSESSID'])
-    print('Command to validate:', 'python3 usf-guest-registration.py -m v -s', register_resp.cookies['PHPSESSID'], '-c <code>')
+    print('Command to validate:', 'python usf-guest-registration.py -m v -s', register_resp.cookies['PHPSESSID'], '-c <code>')
 
 if args.mode.lower() == 'i':
     args.code = input('SMS Code: ')
 
-if atgs.mode.lower() in ('v', 'i'):
+if args.mode.lower() in ('v', 'i'):
     validate_resp = session.post(
         'https://guestwireless.net.usf.edu/Network_Registration/action.php', 
         headers={
